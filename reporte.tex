@@ -65,7 +65,7 @@ Cada profesor tiene a su cargo la impartición de distintos \textbf{cursos}, los
 
 Para la logística de las sesiones, la escuela cuenta con \textbf{aulas} que poseen una capacidad máxima definida. Las clases se estructuran a través de \textbf{horarios}, los cuales vinculan de manera precisa un curso con un aula específica, detallando el día de la semana en que se imparte, junto con la hora de inicio y fin.
 
-Para la documentación de esta arquitectura de datos, se omitió la escritura manual de los scripts DDL en favor de un enfoque visual y automatizado. Se aplicó un proceso de ingeniería inversa (Reverse Engineering) directamente sobre el script SQL de creación de la base de datos. Este procedimiento permitió a la herramienta de modelado leer e interpretar las tablas, atributos, tipos de datos, llaves primarias y las restricciones de llaves foráneas, garantizando una correspondencia exacta con el sistema analizado.
+Para la documentación de esta arquitectura de datos, se omitió la escritura manual de los scripts en favor de un enfoque visual y automatizado. Se aplicó un proceso de ingeniería inversa (Reverse Engineering) directamente sobre el script SQL de creación de la base de datos. Este procedimiento permitió a la herramienta de modelado leer e interpretar las tablas, atributos, tipos de datos, llaves primarias y las restricciones de llaves foráneas, garantizando una correspondencia exacta con el sistema analizado.
 
 \subsection{Estructura de Entidades y Relaciones}
 
@@ -201,7 +201,7 @@ A continuación se detalla la composición de cada una de las entidades del sist
     \caption{Diagrama entidad-relación para el modelo de datos del Sistema Escolar, generado mediante ingeniería inversa.}\label{fig_der}
 \end{figure}
 
-Una vez interpretada la estructura física del esquema, se procedió al poblado inicial de las tablas para realizar las pruebas de validación pertinentes. El siguiente script detalla las inserciones de datos maestras y transaccionales ejecutadas para simular el entorno escolar de manera controlada:
+Una vez interpretada la estructura física del esquema, se procedió al poblado inicial de las tablas para realizar las pruebas de validación pertinentes. El siguiente script detalla las inserciones de datos y transaccionales ejecutadas para simular el entorno escolar:
 
 \begin{lstlisting}[language=SQL, frame=single, caption={Script de inserción de datos iniciales en la base de datos escolar}]
 -- Insertar datos en Departamentos
@@ -253,9 +253,9 @@ INSERT INTO notas (id_inscripcion, nota) VALUES
 (1, 8.5), (2, 9.0), (3, 7.5), (4, 6.8), (5, 9.2), (6, 7.0);
 \end{lstlisting}
 
-\section{Consultas de extracción de datos}
+\subsection{Consultas y extracción de datos}
 
-Con la base de datos estructurada y poblada, se procedió a responder un listado de preguntas de negocio formulando las correspondientes sentencias SQL de consulta.
+Con la base de datos estructurada y poblada, se procedió a responder un listado de preguntas de negocio formulando las correspondientes sentencias SQL de consulta, arrojando los siguientes resultados:
 
 \begin{enumerate}
     \item ¿Cuáles son los estudiantes inscritos en el curso "Álgebra"?
@@ -266,6 +266,15 @@ JOIN inscripciones i ON e.id = i.id_estudiante
 JOIN cursos c ON i.id_curso = c.id 
 WHERE c.nombre = 'Álgebra';
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{apellido} \\ \hline
+        Juan & Pérez \\ 
+        María & Gómez \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué cursos imparte el profesor Pedro Martínez?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -275,6 +284,14 @@ FROM cursos c
 inner JOIN profesores p ON c.id_profesor = p.id 
 WHERE p.nombre = 'Pedro' AND p.apellido = 'Martínez';
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Nombre\_curso} & \textbf{Nombre\_profesor} \\ \hline
+        Programación & Pedro Martínez \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Cuántos estudiantes están inscritos en cada curso?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -283,6 +300,19 @@ FROM cursos c
 LEFT JOIN inscripciones i ON c.id = i.id_curso 
 GROUP BY c.id, c.nombre;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{total\_estudiantes} \\ \hline
+        Álgebra & 2 \\ 
+        Biología & 1 \\ 
+        Historia & 1 \\ 
+        Programación & 1 \\ 
+        Física & 1 \\ 
+        Ética & 0 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Cuál es el promedio de notas por curso?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -292,6 +322,18 @@ JOIN inscripciones i ON c.id = i.id_curso
 JOIN notas n ON i.id = n.id_inscripcion 
 GROUP BY c.id, c.nombre;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{promedio\_notas} \\ \hline
+        Álgebra & 8.00 \\ 
+        Biología & 9.00 \\ 
+        Historia & 6.80 \\ 
+        Programación & 9.20 \\ 
+        Física & 7.00 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item Lista de estudiantes con notas mayores a 8.0
 \begin{lstlisting}[language=SQL, frame=single]
@@ -302,6 +344,16 @@ JOIN notas n ON i.id = n.id_inscripcion
 JOIN cursos c ON i.id_curso = c.id 
 WHERE n.nota > 8.0;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{apellido} & \textbf{nota} & \textbf{curso} \\ \hline
+        Juan & Pérez & 8.5 & Álgebra \\ 
+        Juan & Pérez & 9.0 & Biología \\ 
+        Carlos & Sánchez & 9.2 & Programación \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué cursos tienen más de una inscripción?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -311,6 +363,14 @@ JOIN inscripciones i ON c.id = i.id_curso
 GROUP BY c.id, c.nombre 
 HAVING COUNT(i.id) > 1;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{total\_inscripciones} \\ \hline
+        Álgebra & 2 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué profesores pertenecen al departamento de 'Ingeniería'?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -319,6 +379,14 @@ FROM profesores p
 JOIN departamentos d ON p.id_departamento = d.id 
 WHERE d.nombre = 'Ingeniería';
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{apellido} \\ \hline
+        Pedro & Martínez \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Cuáles son los cursos programados los lunes?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -327,6 +395,14 @@ FROM cursos c
 JOIN horarios h ON c.id = h.id_curso 
 WHERE h.dia_semana = 'Lunes';
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{hora\_inicio} & \textbf{hora\_fin} \\ \hline
+        Álgebra & 08:00:00 & 10:00:00 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué aulas tienen una capacidad mayor a 25?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -334,6 +410,15 @@ SELECT nombre, capacidad
 FROM aulas 
 WHERE capacidad > 25;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{capacidad} \\ \hline
+        Aula 101 & 30 \\ 
+        Sala Conferencias & 50 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item Lista de cursos con su aula y horario
 \begin{lstlisting}[language=SQL, frame=single]
@@ -342,6 +427,18 @@ FROM cursos c
 JOIN horarios h ON c.id = h.id_curso 
 JOIN aulas a ON h.id_aula = a.id;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{curso} & \textbf{aula} & \textbf{dia\_semana} & \textbf{hora\_inicio} & \textbf{hora\_fin} \\ \hline
+        Álgebra & Aula 101 & Lunes & 08:00:00 & 10:00:00 \\ 
+        Biología & Aula 102 & Martes & 10:00:00 & 12:00:00 \\ 
+        Historia & Sala Conferencias & Miércoles & 13:00:00 & 15:00:00 \\ 
+        Programación & Laboratorio 1 & Jueves & 09:00:00 & 11:00:00 \\ 
+        Física & Aula 102 & Viernes & 08:00:00 & 10:00:00 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué estudiantes tiene la nota más alta y en qué cursos?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -352,6 +449,14 @@ JOIN cursos c ON i.id_curso = c.id
 JOIN notas n ON i.id = n.id_inscripcion 
 WHERE n.nota = (SELECT MAX(nota) FROM notas);
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{apellido} & \textbf{curso} & \textbf{nota} \\ \hline
+        Carlos & Sánchez & Programación & 9.2 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Cuántos profesores hay por departamento?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -360,6 +465,17 @@ FROM departamentos d
 LEFT JOIN profesores p ON d.id = p.id_departamento 
 GROUP BY d.id, d.nombre;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{total\_profesores} \\ \hline
+        Matemáticas & 1 \\ 
+        Ciencias & 1 \\ 
+        Humanidades & 1 \\ 
+        Ingeniería & 1 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué cursos no tienen estudiantes inscritos?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -368,6 +484,14 @@ FROM cursos c
 LEFT JOIN inscripciones i ON c.id = i.id_curso 
 WHERE i.id IS NULL;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|}
+        \hline
+        \textbf{nombre} \\ \hline
+        Ética \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Qué estudiantes están inscritos en más de un curso?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -377,6 +501,15 @@ JOIN inscripciones i ON e.id = i.id_estudiante
 GROUP BY e.id, e.nombre, e.apellido 
 HAVING COUNT(i.id_curso) > 1;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{apellido} & \textbf{total\_cursos} \\ \hline
+        Juan & Pérez & 2 \\ 
+        María & Gómez & 2 \\ \hline
+        \end{tabular}
+    \end{table}
 
     \item ¿Cuál es el curso con menor promedio de notas?
 \begin{lstlisting}[language=SQL, frame=single]
@@ -388,6 +521,14 @@ GROUP BY c.id, c.nombre
 ORDER BY promedio ASC 
 LIMIT 1;
 \end{lstlisting}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|}
+        \hline
+        \textbf{nombre} & \textbf{promedio} \\ \hline
+        Historia & 6.80 \\ \hline
+        \end{tabular}
+    \end{table}
 \end{enumerate}
 
 \section{Conclusiones}

@@ -4,5 +4,5 @@
 \contentsline {section}{\numberline {3}Análisis}{2}{}%
 \contentsline {subsection}{\numberline {3.1}Estructura de Entidades y Relaciones}{3}{}%
 \contentsline {section}{\numberline {4}Diagramas y resultados}{5}{}%
-\contentsline {section}{\numberline {5}Consultas de extracción de datos}{6}{}%
-\contentsline {section}{\numberline {6}Conclusiones}{8}{}%
+\contentsline {subsection}{\numberline {4.1}Consultas y extracción de datos}{6}{}%
+\contentsline {section}{\numberline {5}Conclusiones}{10}{}%

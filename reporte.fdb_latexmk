@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1781276434.96817 "c:/Users/joant/OneDrive/Escritorio/rev_eng/reporte.tex" "reporte.pdf" "reporte" 1781276437.06884 0
+["pdflatex"] 1781277582.31199 "c:/Users/joant/OneDrive/Escritorio/rev_eng/reporte.tex" "reporte.pdf" "reporte" 1781277583.20231 0
   "C:/Users/joant/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1780931816 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/joant/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1780328041 13353041 217dec5c761c713b639238d56a752f87 ""
   "C:/Users/joant/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -54,14 +54,14 @@
   "C:/Users/joant/AppData/Local/Programs/MiKTeX/tex/latex/listings/lstmisc.sty" 1763898348 77105 002e983b638eadbf04e580642335f689 ""
   "C:/Users/joant/AppData/Local/Programs/MiKTeX/tex/latex/listings/lstpatch.sty" 1763898348 353 9024412f43e92cd5b21fe9ded82d0610 ""
   "C:/Users/joant/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "c:/Users/joant/OneDrive/Escritorio/rev_eng/reporte.tex" 1781276431 15092 be6f26087f21eb569dc6675389d609bf ""
+  "c:/Users/joant/OneDrive/Escritorio/rev_eng/reporte.tex" 1781277581 19530 6a8d7ac9ff449d74786f71397063a278 ""
   "imgs/der.png" 1780930209 244577 550f2bbc4d4c4c12f55218a75ab53f82 ""
-  "reporte.aux" 1781276436 2515 3d68c1514514b14d35ea437c14480b91 "pdflatex"
-  "reporte.lof" 1781276436 202 512c61f85d0a1c463ea99fc59a6849dd "pdflatex"
-  "reporte.lol" 1781276436 117 a333a87e5d5f6e3362fc0b45c5416422 "pdflatex"
-  "reporte.lot" 1781276436 761 ab1ac362e2085901ffca0b5bf3e33911 "pdflatex"
-  "reporte.tex" 1781276431 15092 be6f26087f21eb569dc6675389d609bf ""
-  "reporte.toc" 1781276436 514 9cb6e98a3adb3e17e885b1b056000c17 "pdflatex"
+  "reporte.aux" 1781277583 2521 5d09d569fd48af16826d757d473df450 "pdflatex"
+  "reporte.lof" 1781277583 202 512c61f85d0a1c463ea99fc59a6849dd "pdflatex"
+  "reporte.lol" 1781277583 117 a333a87e5d5f6e3362fc0b45c5416422 "pdflatex"
+  "reporte.lot" 1781277583 761 ab1ac362e2085901ffca0b5bf3e33911 "pdflatex"
+  "reporte.tex" 1781277581 19530 6a8d7ac9ff449d74786f71397063a278 ""
+  "reporte.toc" 1781277583 519 46b3d9580db7fe15cfe2e60daf908fe8 "pdflatex"
   (generated)
   "reporte.aux"
   "reporte.lof"
