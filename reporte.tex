@@ -269,9 +269,10 @@ WHERE c.nombre = 'Álgebra';
 
     \item ¿Qué cursos imparte el profesor Pedro Martínez?
 \begin{lstlisting}[language=SQL, frame=single]
-SELECT c.nombre 
-FROM cursos c 
-JOIN profesores p ON c.id_profesor = p.id 
+SELECT c.nombre AS Nombre_curso, 
+concat(p.nombre, " ",p.apellido) as Nombre_profesor
+FROM cursos c
+inner JOIN profesores p ON c.id_profesor = p.id 
 WHERE p.nombre = 'Pedro' AND p.apellido = 'Martínez';
 \end{lstlisting}
 
